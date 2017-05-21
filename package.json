@@ -1,9 +1,14 @@
 {
   "name": "bot-librarian",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "bot for library recommendation",
   "main": "app.js",
+  "engines": {
+    "node": "6"
+  },
+  "private": true,
   "scripts": {
+    "start": "node ./bin/bot-librarian",
     "test": "echo \"Error: no test specified\""
   },
   "repository": {
@@ -11,6 +16,10 @@
     "url": "git+https://github.com/GorlifSense/bot-librarian.git"
   },
   "author": "Gorlif Sense",
+  "contributors": [
+    "Glib Ischenko <glib@gorlifsense.com> (http://fleischer.gorlifsense.com)",
+    "Artem Derkach <artem@gorlifsense.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GorlifSense/bot-librarian/issues"
