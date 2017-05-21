@@ -1,0 +1,25 @@
+{
+  "name": "bot-librarian",
+  "version": "0.0.1",
+  "description": "bot for library recommendation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GorlifSense/bot-librarian.git"
+  },
+  "author": "Gorlif Sense",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GorlifSense/bot-librarian/issues"
+  },
+  "homepage": "https://github.com/GorlifSense/bot-librarian#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.0",
+    "request": "^2.81.0"
+  }
+}
