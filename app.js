@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.listen((process.env.PORT || 5000));
 
 // Server index page
 app.get("/", function (req, res) {
@@ -16,10 +15,20 @@ app.get("/", function (req, res) {
 // Used for verification
 app.get("/webhook", function (req, res) {
   if (req.query["hub.verify_token"] === "this_is_my_token") {
-    console.log("Verified webhook");
+    winston.debug("Verified webhook");
     res.status(200).send(req.query["hub.challenge"]);
   } else {
-    console.error("Verification failed. The tokens do not match.");
+    winston.error("Verification failed. The tokens do not match.");
     res.sendStatus(403);
   }
 });
+
+/**
+ * Connect to Mongo and start app listening to port
+ * @param  {string} PORT  - port of web server
+\*/
+module.exports = function startServer(PORT) {
+
+  app.listen(PORT);
+
+};
