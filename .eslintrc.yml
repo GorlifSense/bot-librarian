@@ -1,17 +1,13 @@
 root: true
 env:
-  jquery: true
   commonjs: true
   es6: true
-  mocha: true
   node: true
-  browser: true
 extends: 'eslint:recommended'
 ecmaVersion: 6
 ecmaFeatures:
   impliedStrict: true
   modules: false
-  jsx: true
 rules:
   # Possible Errors
   comma-dangle: [2, never]

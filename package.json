@@ -1,6 +1,6 @@
 {
   "name": "bot-librarian",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "bot for library recommendation",
   "main": "app.js",
   "engines": {
@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/bot-librarian",
-    "test": "echo \"Error: no test specified\""
+    "test": "npm run eslint",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,8 @@
     "express": "^4.15.3",
     "request": "^2.81.0",
     "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0"
   }
 }
