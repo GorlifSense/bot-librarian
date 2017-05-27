@@ -1,11 +1,17 @@
 version: '3'
 services:
   bot-librarian:
+    # build image from Dockerfile that is in current folder
     build: .
+    # container name
     container_name: bot-librarian
-    image: bot-librarian
+    # image {name:tag}
+    image: "bot-librarian:${BOT_VERSION:-latest}"
+    # commnd to use when container is setting up
     command: node ./bin/bot-librarian.js
+    # connect two ports. Outside and inside container
     ports:
       - "${BOT_EXTERNAL_PORT-:5000}:${BOT_INTERNAL_PORT:-5000}"
+    # environment variables
     environment:
       - PORT=${PORT:-5000}
