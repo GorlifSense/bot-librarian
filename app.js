@@ -1,20 +1,24 @@
+'use strict';
+
 const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
 const winston = require('winston');
+const packagejson = require('./package.json');
 
 const app = express();
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Server index page
-app.get('/', function (req, res) {
-  res.send(`@botlibrarian here. Current version is v${require('./package.json').version}`);
+app.get('/', (req, res) => {
+  res.send(`@botlibrarian here. Current version is v${packagejson.version}`);
 });
 
 // Facebook Webhook
 // Used for verification
-app.get('/webhook', function (req, res) {
+app.get('/webhook', (req, res) => {
   if (req.query['hub.verify_token'] === process.env.VERIFICATION_TOKEN) {
     winston.debug('Verified webhook');
     res.status(200).send(req.query['hub.challenge']);
@@ -27,12 +31,13 @@ app.get('/webhook', function (req, res) {
 // All callbacks for Messenger will be POST-ed here
 app.post('/webhook', function (req, res) {
   // Make sure this is a page subscription
-  if (req.body.object == 'page') {
+  if (req.body.object === 'page') {
     // Iterate over each entry
     // There may be multiple entries if batched
-    req.body.entry.forEach(function(entry) {
+    winston.debug('req.body', req.body);
+    req.body.entry.forEach((entry) => {
       // Iterate over each messaging event
-      entry.messaging.forEach(function(event) {
+      entry.messaging.forEach((event) => {
         if (event.postback) {
           processPostback(event);
         }
@@ -57,16 +62,16 @@ function processPostback(event) {
         fields: 'first_name'
       },
       method: 'GET'
-    }, function(error, response, body) {
+    }, function (error, response, body) {
       var greeting = '';
       if (error) {
-        winston.error('Error getting user\'s name: ' +  error);
+        winston.error('Error getting user\'s name: ' + error);
       } else {
         var bodyObj = JSON.parse(body);
         name = bodyObj.first_name;
         greeting = 'Hi ' + name + '. ';
       }
-      var message = greeting + 'My name is SP Movie Bot. I can tell you various details regarding movies. What movie would you like to know about?';
+      let message = greeting + 'My name is SP Movie Bot. I can tell you various details regarding movies. What movie would you like to know about?';
       sendMessage(senderId, {text: message});
     });
   }
@@ -76,13 +81,13 @@ function processPostback(event) {
 function sendMessage(recipientId, message) {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+    qs: {'access_token': process.env.PAGE_ACCESS_TOKEN},
     method: 'POST',
     json: {
       recipient: {id: recipientId},
-      message: message,
+      message: message
     }
-  }, function(error, response, body) {
+  }, function (error, response, body) {
     if (error) {
       winston.error('Error sending message: ' + response.error);
     }
